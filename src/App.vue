@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
+import Header1 from '@/components/Layout/Header.vue'
+import Footer2 from '@/components/Layout/Footer.vue'
 </script>
 
 <template>
@@ -16,12 +18,17 @@ import HelloWorld from './components/HelloWorld.vue'
       </nav>
     </div>
   </header> -->
-
-  <RouterView />
+  <main>
+    <Header1 />
+    <section>
+      <RouterView />
+    </section>
+    <Footer2 />
+  </main>
 </template>
 
 <style scoped>
-header {
+/* header {
   line-height: 1.5;
   max-height: 100vh;
 }
@@ -81,5 +88,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>
