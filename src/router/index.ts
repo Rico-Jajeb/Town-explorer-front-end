@@ -1,8 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
-import Homepage from '../components/UserPage/HomePage.vue'
-import HelloWorld from '@/components/HelloWorld.vue'
 import HomePage from '../components/UserPage/HomePage.vue'
 
 const router = createRouter({
@@ -16,10 +12,14 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      // gamita ini kay para diri dayon mag load an about vue,
+      //  bali ada la hiya magana page ig vvisit na an about vue
       component: () => import('../views/AboutView.vue'),
+    },
+    {
+      path: '/AddData',
+      name: 'add',
+      component: () => import('@/components/AdminPage/InsertPageData.vue'),
     },
   ],
 })
