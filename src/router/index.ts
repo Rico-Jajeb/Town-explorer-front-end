@@ -31,6 +31,16 @@ const router = createRouter({
       name: 'add',
       component: () => import('@/components/AdminPage/InsertPageData.vue'),
     },
+    {
+      path: '/logout2',
+      name: 'Logout',
+      component: () => import('@/views/auth/Logout.vue'),
+    },
+    {
+      path: '/welcome',
+      name: 'welcome',
+      component: () => import('@/views/userSection/WelcomeUser.vue'),
+    },
   ],
 })
 
