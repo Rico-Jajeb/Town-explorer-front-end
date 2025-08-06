@@ -3,7 +3,7 @@ import ProgressSpinner from 'primevue/progressspinner'
 
 import Footer from '@/components/Layout/Footer.vue'
 
-import { useSystemInfo } from '@/composables/useSystemInfo'
+import { useSystemInfo } from '@/composables/Settings/useSystemInfo'
 const { systemInfo, isLoading, error } = useSystemInfo()
 </script>
 

@@ -2,7 +2,7 @@
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Image from 'primevue/image'
-import { useSystemSettings } from '@/composables/useSystemUpdate'
+import { useSystemSettings } from '@/composables/Settings/useSystemUpdate'
 
 const { form, srcLogo, errors, onFileSelectLogo, updateSystemInfo } = useSystemSettings()
 </script>
@@ -142,8 +142,10 @@ const { form, srcLogo, errors, onFileSelectLogo, updateSystemInfo } = useSystemS
           />
         </div>
       </div>
-
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
+      <br />
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+        Update
+      </button>
     </form>
 
     <!-- amo ini an kanan pop up notif pag nag submit msg -->

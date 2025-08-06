@@ -13,4 +13,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    host: '192.168.254.169', // 👈 use same IP as Laravel backend
+    port: 5173,
+  },
 })

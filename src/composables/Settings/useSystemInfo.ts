@@ -43,7 +43,7 @@ export function useSystemInfo() {
 
     isLoading.value = true
     fetchPromise = axios
-      .get(`${API_BASE_URL}/system-info`)
+      .get(`${API_BASE_URL}/api/v1/system-info`)
       .then((response) => {
         cachedSystemInfo.value = response.data
         lastFetched = Date.now()

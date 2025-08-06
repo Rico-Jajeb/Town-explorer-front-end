@@ -49,7 +49,7 @@ export function useSystemSettings() {
 
   const fetchSystemInfo = async () => {
     try {
-      const { data } = await axios.get(`${API_BASE_URL}/system-info`)
+      const { data } = await axios.get(`${API_BASE_URL}/api/v1/system-info`)
       form.value = { ...form.value, ...data }
     } catch (err) {
       console.error('Failed to fetch system info:', err)
@@ -59,7 +59,7 @@ export function useSystemSettings() {
   const updateSystemInfo = async () => {
     try {
       errors.value = {}
-      await axios.put(`${API_BASE_URL}/system-update`, form.value)
+      await axios.put(`${API_BASE_URL}/api/v1/system-update`, form.value)
 
       message.value = 'System information updated successfully!'
       toast.add({
