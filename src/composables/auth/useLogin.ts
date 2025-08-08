@@ -1,59 +1,33 @@
-import { reactive, ref } from 'vue'
-import axios from 'axios'
-import { useToast } from 'primevue/usetoast'
+import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
-
-interface LoginForm {
-  email: string
-  password: string
-}
+import { useAuthState } from '@/composables/auth/useAuthState' // shared state composable
+import { useAttempt } from '@/composables/auth/useAttempt'
+import { useToast } from 'primevue/usetoast'
 
 export function useLogin() {
-  const toast = useToast()
   const router = useRouter()
-  const form = reactive<LoginForm>({
-    email: '',
-    password: '',
-  })
+  const toast = useToast()
+  const { setAuthenticated, setUser, authenticated } = useAuthState()
+  const { attempt } = useAttempt()
 
-  const errorMessage = ref<string | null>(null)
-  const successMessage = ref<string | null>(null)
-
-  const login = async () => {
-    errorMessage.value = null
-    successMessage.value = null
+  const login = async (credentials: { email: string; password: string }) => {
+    await axios.get('/sanctum/csrf-cookie')
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/login`, form)
-      const token = response.data.token
-
-      localStorage.setItem('token', token)
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
-      successMessage.value = '✅ Login successful!'
+      await axios.post('/login', credentials)
       toast.add({
         severity: 'success',
-        summary: 'Success',
-        detail: 'Login successful!',
-        life: 3000,
+        summary: 'Login message',
+        detail: 'Login Successfully!',
+        life: 10000,
       })
-
-      setTimeout(() => {
-        router.push('/Dashboard')
-      }, 2000)
-    } catch (error: any) {
-      if (error.response && error.response.status === 401) {
-        errorMessage.value = '❌ Invalid email or password.'
-      } else {
-        errorMessage.value = '❌ Something went wrong. Please try again.'
-      }
+      router.push('/dashboard')
+      return attempt()
+    } catch (err) {
+      const error = err as AxiosError<{ errors?: Record<string, string[]> }>
+      return Promise.reject(error.response?.data?.errors || error.message)
     }
   }
 
-  return {
-    form,
-    errorMessage,
-    successMessage,
-    login,
-  }
+  return { login }
 }

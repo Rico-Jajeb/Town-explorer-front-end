@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import ProgressSpinner from 'primevue/progressspinner'
-
-import Footer from '@/components/Layout/Footer.vue'
-
 import { useSystemInfo } from '@/composables/Settings/useSystemInfo'
+
+import { useToast } from 'primevue/usetoast'
+
 const { systemInfo, isLoading, error } = useSystemInfo()
+const toast = useToast()
 </script>
 
 <template>
@@ -28,9 +29,6 @@ const { systemInfo, isLoading, error } = useSystemInfo()
       <p>{{ systemInfo?.system_slogan2 }}</p>
     </div>
   </main>
-  <footer class="">
-    <!-- <Footer /> -->
-  </footer>
 </template>
 
 <style></style>

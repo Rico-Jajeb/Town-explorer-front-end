@@ -1,8 +1,10 @@
 <script setup>
-import useAuth from '@/composables/auth/useAuth'
+import { useAuthState } from '@/composables/auth/useAuthState'
+import { useLogin } from '@/composables/auth/useLogin'
 import { reactive } from 'vue'
 
-const { authenticated, user, login } = useAuth()
+const { authenticated, user } = useAuthState()
+const { login } = useLogin()
 
 const form = reactive({
   email: '',

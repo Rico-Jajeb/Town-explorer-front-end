@@ -1,68 +1,88 @@
-import { computed, reactive } from 'vue'
-import axios, { AxiosError } from 'axios'
+// import { computed, reactive, ref } from 'vue'
+// import axios, { AxiosError } from 'axios'
 
-interface User {
-  id?: number
-  name?: string
-  email?: string
-  [key: string]: any
-}
+// import { useRouter } from 'vue-router'
 
-interface Credentials {
-  email: string
-  password: string
-}
+// interface User {
+//   id?: number
+//   name?: string
+//   email?: string
+//   [key: string]: any
+// }
 
-interface State {
-  authenticated: boolean
-  user: User
-}
+// interface Credentials {
+//   email: string
+//   password: string
+// }
 
-const state = reactive<State>({
-  authenticated: false,
-  user: {},
-})
+// interface State {
+//   authenticated: boolean
+//   user: User
+// }
 
-export default function useAuth() {
-  const authenticated = computed<boolean>(() => state.authenticated)
-  const user = computed<User>(() => state.user)
+// const state = reactive<State>({
+//   authenticated: false,
+//   user: {},
+// })
 
-  const setAuthenticated = (authenticated: boolean): void => {
-    state.authenticated = authenticated
-  }
+// export default function useAuth() {
+//   const router = useRouter()
+//   const authenticated = computed<boolean>(() => state.authenticated)
+//   const user = computed<User>(() => state.user)
 
-  const setUser = (user: User): void => {
-    state.user = user
-  }
+//   const setAuthenticated = (authenticated: boolean): void => {
+//     state.authenticated = authenticated
+//   }
 
-  const login = async (credentials: Credentials): Promise<void> => {
-    await axios.get('/sanctum/csrf-cookie')
+//   const setUser = (user: User): void => {
+//     state.user = user
+//   }
 
-    try {
-      await axios.post('/login', credentials)
-      return attempt()
-    } catch (err) {
-      const error = err as AxiosError<{ errors?: Record<string, string[]> }>
-      return Promise.reject(error.response?.data?.errors || error.message)
-    }
-  }
+//   const login = async (credentials: Credentials): Promise<void> => {
+//     await axios.get('/sanctum/csrf-cookie')
 
-  const attempt = async (): Promise<void> => {
-    try {
-      const response = await axios.get<User>('/api/user')
+//     try {
+//       await axios.post('/login', credentials)
+//       console.log('go here')
 
-      setAuthenticated(true)
-      setUser(response.data)
-    } catch (err) {
-      setAuthenticated(false)
-      setUser({})
-    }
-  }
+//       router.push('/dashboard')
+//       return attempt()
+//     } catch (err) {
+//       const error = err as AxiosError<{ errors?: Record<string, string[]> }>
+//       return Promise.reject(error.response?.data?.errors || error.message)
+//     }
+//   }
 
-  return {
-    authenticated,
-    user,
-    login,
-    attempt,
-  }
-}
+//   const attempt = async (): Promise<void> => {
+//     try {
+//       const response = await axios.get<User>('/api/user')
+
+//       setAuthenticated(true)
+//       setUser(response.data)
+//     } catch (err) {
+//       setAuthenticated(false)
+//       setUser({})
+//     }
+//   }
+
+//   const logout = async (): Promise<void> => {
+//     await axios.get('/sanctum/csrf-cookie') // ensure CSRF token is set
+//     try {
+//       await axios.post('/logout')
+
+//       router.push('/Home')
+//     } finally {
+//       // Whether request succeeds or fails, clear state
+//       setAuthenticated(false)
+//       setUser({})
+//     }
+//   }
+
+//   return {
+//     authenticated,
+//     user,
+//     login,
+//     attempt,
+//     logout,
+//   }
+// }

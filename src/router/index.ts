@@ -10,6 +10,13 @@ const router = createRouter({
       component: HomePage,
     },
     {
+      path: '/Home',
+      name: 'Home',
+      // gamita ini kay para diri dayon mag load an about vue,
+      //  bali ada la hiya magana page ig vvisit na an about vue
+      component: () => import('@/views/userSection/HomePage.vue'),
+    },
+    {
       path: '/about',
       name: 'about',
       // gamita ini kay para diri dayon mag load an about vue,
@@ -49,8 +56,8 @@ const router = createRouter({
 
     //ADMIN SECTION
     {
-      path: '/Dashboard',
-      name: 'Dashboard',
+      path: '/dashboard',
+      name: 'dashboard',
       component: () => import('@/views/adminSection/Dashboard.vue'),
     },
   ],

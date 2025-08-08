@@ -1,38 +1,33 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthState } from '@/composables/auth/useAuthState'
+
+import { useToast } from 'primevue/usetoast'
 
 export function useLogout() {
   const router = useRouter()
+  const toast = useToast()
+  const { setAuthenticated, setUser } = useAuthState()
+  const isLoggingOut = ref(false)
 
   const logout = async () => {
+    await axios.get('/sanctum/csrf-cookie')
     try {
-      await axios.post(
-        'http://192.168.254.169:8000/api/logout',
-        {},
-        {
-          withCredentials: true,
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-XSRF-TOKEN': Cookies.get('XSRF-TOKEN'), // Required
-          },
-        },
-      )
-
-      alert('✅ Logged out successfully')
-
-      // ⚠️ Optionally clear browser cookies if needed:
-      Cookies.remove('XSRF-TOKEN')
-      Cookies.remove('laravel_session')
-
-      router.push('/login')
-    } catch (error) {
-      console.error('❌ Logout failed:', error)
-      alert('Failed to logout.')
+      await axios.post('/logout')
+      toast.add({
+        severity: 'success',
+        summary: 'Logout message',
+        detail: 'Logout Successfully!',
+        life: 10000,
+      })
+      router.push('/Home')
+    } finally {
+      setAuthenticated(false)
+      setUser({})
+      isLoggingOut.value = false
     }
   }
 
-  return {
-    logout,
-  }
+  return { logout }
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-
+import { useToast } from 'primevue/usetoast'
 import Header1 from '@/components/Layout/Header.vue'
 import Footer2 from '@/components/Layout/Footer.vue'
 
@@ -8,6 +8,8 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://192.168.254.169:8000'
 axios.defaults.withCredentials = true
 axios.defaults.withXSRFToken = true
+
+const toast = useToast()
 </script>
 
 <template>
@@ -30,6 +32,7 @@ axios.defaults.withXSRFToken = true
     </section>
     <Footer2 />
   </main>
+  <Toast />
 </template>
 
 <style scoped>

@@ -12,12 +12,12 @@ import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
 import axios from 'axios'
 
-import useAuth from '@/composables/auth/useAuth'
-axios.defaults.baseURL = 'http://192.168.254.169:8000'
+import { useAttempt } from './composables/auth/useAttempt'
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
 axios.defaults.withCredentials = true
 axios.defaults.withXSRFToken = true
 
-const { attempt } = useAuth()
+const { attempt } = useAttempt()
 
 const app = createApp(App)
 
