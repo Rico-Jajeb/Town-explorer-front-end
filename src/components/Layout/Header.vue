@@ -1,5 +1,7 @@
 <script setup>
+import useAuth from '@/composables/auth/useAuth'
 import { RouterLink, RouterView } from 'vue-router'
+const { authenticated, user } = useAuth()
 </script>
 <template>
   <nav>
@@ -10,5 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <RouterLink to="/register">Sign Up</RouterLink>
     <RouterLink to="/logout2">Logout</RouterLink>
     <RouterLink to="/welcome">welcome user</RouterLink>
+    <div v-if="authenticated">Hello {{ user.name }}!</div>
+    <div v-else class="">guest</div>
   </nav>
 </template>

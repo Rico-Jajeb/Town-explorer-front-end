@@ -40,12 +40,18 @@
       </form>
     </div>
   </div>
+
+  <Toast />
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import axios from 'axios'
-
+import { useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
+import { useLogin } from '@/composables/auth/useLogin'
+const router = useRouter()
+const toast = useToast()
 interface LoginForm {
   email: string
   password: string
@@ -59,28 +65,56 @@ const form = reactive<LoginForm>({
 const errorMessage = ref<string | null>(null)
 const successMessage = ref<string | null>(null)
 
-const login = async () => {
+const login = async (): Promise<void> => {
   errorMessage.value = null
   successMessage.value = null
 
+  const baseURL = import.meta.env.VITE_API_BASE_URL
+
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/login`, form)
-    const token = response.data.token
+    // Step 1: Get CSRF cookie
+    await axios.get(`${baseURL}/sanctum/csrf-cookie`, {
+      withCredentials: true,
+    })
 
-    localStorage.setItem('token', token)
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    // Step 2: Attempt login
+    await axios.post(
+      `${baseURL}/api/v1/login2`,
+      {
+        email: form.email,
+        password: form.password,
+      },
+      {
+        withCredentials: true,
+      },
+    )
 
-    successMessage.value = '✅ Login successful!'
+    // Step 3: Fetch authenticated user
+    const response = await axios.get(`${baseURL}/api/user`, {
+      withCredentials: true,
+    })
+
+    const user = response.data
+    console.log('✅ Logged in user:', user)
+    successMessage.value = 'Login successful!'
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Logged in', life: 3000 })
+
+    // Redirect to welcome/dashboard
+    router.push('/welcome')
   } catch (error: any) {
-    if (error.response && error.response.status === 401) {
-      errorMessage.value = '❌ Invalid email or password.'
-    } else {
-      errorMessage.value = '❌ Something went wrong. Please try again.'
-    }
+    console.error('Login failed:', error)
+    toast.add({
+      severity: 'error',
+      summary: 'Login Failed',
+      detail: error?.response?.data?.message || 'Invalid credentials',
+      life: 3000,
+    })
+
+    errorMessage.value = 'Login failed. Please check your credentials.'
   }
 }
-</script>
 
-<style scoped>
-/* Optional: Tailwind CSS already handles the styling */
-</style>
+// const toast = useToast()
+
+// const { form, errorMessage, successMessage, login } = useLogin()
+</script>

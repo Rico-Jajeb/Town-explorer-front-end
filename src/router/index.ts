@@ -41,6 +41,18 @@ const router = createRouter({
       name: 'welcome',
       component: () => import('@/views/userSection/WelcomeUser.vue'),
     },
+    {
+      path: '/welcome',
+      name: 'welcome',
+      component: () => import('@/views/userSection/WelcomeUser.vue'),
+    },
+
+    //ADMIN SECTION
+    {
+      path: '/Dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/adminSection/Dashboard.vue'),
+    },
   ],
 })
 

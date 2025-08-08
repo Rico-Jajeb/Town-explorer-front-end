@@ -1,55 +1,66 @@
-<template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50">
-    <div class="bg-white p-6 rounded shadow w-full max-w-md">
-      <h1 class="text-2xl font-bold mb-4 text-center">Welcome Page</h1>
+<script setup>
+import useAuth from '@/composables/auth/useAuth'
+import { reactive } from 'vue'
 
-      <div v-if="user">
-        <p class="text-lg"><strong>Name:</strong> {{ user.name }}</p>
-        <p class="text-lg"><strong>Email:</strong> {{ user.email }}</p>
-      </div>
+const { authenticated, user, login } = useAuth()
 
-      <div v-else>
-        <p class="text-gray-500">Loading user info...</p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import axios from 'axios'
-
-interface User {
-  id: number
-  name: string
-  email: string
-  created_at: string
-}
-
-const user = ref<User | null>(null)
-
-const fetchUser = async () => {
-  try {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      console.warn('No token found')
-      return
-    }
-
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
-    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/user`)
-    user.value = response.data
-  } catch (error) {
-    console.error('❌ Failed to fetch user:', error)
-  }
-}
-
-onMounted(() => {
-  fetchUser()
+const form = reactive({
+  email: '',
+  password: '',
 })
 </script>
 
-<style scoped>
-/* Optional styling – Tailwind handles most of it */
-</style>
+<template>
+  <!-- <div class="bg-gray-800">
+    <form v-on:submit.prevent="login(form)">
+      <input type="email" v-model="form.email" class="bg-white" />
+      <br />
+      <input type="password" v-model="form.password" class="bg-white" />
+      <br />
+      <button type="submit">Log in</button>
+    </form>
+  </div> -->
+
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-md bg-white p-6 rounded shadow">
+      <div v-if="authenticated">Hello {{ user.name }}!</div>
+      <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+
+      <form v-on:submit.prevent="login(form)">
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1" for="email">Email</label>
+          <input
+            v-model="form.email"
+            type="email"
+            id="email"
+            class="w-full border px-3 py-2 rounded"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1" for="password">Password</label>
+          <input
+            v-model="form.password"
+            type="password"
+            id="password"
+            class="w-full border px-3 py-2 rounded"
+            required
+          />
+        </div>
+
+        <!-- <div v-if="errorMessage" class="text-red-500 text-sm mb-4">
+          {{ errorMessage }}
+        </div>
+
+        <div v-if="successMessage" class="text-green-500 text-sm mb-4">
+          {{ successMessage }}
+        </div> -->
+        <br />
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+          Login
+        </button>
+      </form>
+    </div>
+  </div>
+</template>
