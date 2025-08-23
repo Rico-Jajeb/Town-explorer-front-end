@@ -19,6 +19,6 @@ const { authenticated, user } = useAuthState()
     </div>
 
     <div v-if="authenticated">Hello {{ user.name }}!</div>
-    <div v-else class="">guest</div>
+    <div v-else class="">guest2</div>
   </nav>
 </template>
