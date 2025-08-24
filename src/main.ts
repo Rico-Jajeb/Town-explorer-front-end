@@ -19,6 +19,7 @@ axios.defaults.withXSRFToken = true
 
 const { attempt } = useAttempt()
 
+const pinia = createPinia()
 const app = createApp(App)
 
 app.use(createPinia())
@@ -32,6 +33,8 @@ app.use(PrimeVue, {
 
 app.use(ToastService) // ✅ enable toast notifications
 app.component('Toast', Toast) // ✅ globally register <Toast />
+
+app.use(pinia) //kanan pinia ini
 
 attempt().then(() => {
   app.mount('#app')

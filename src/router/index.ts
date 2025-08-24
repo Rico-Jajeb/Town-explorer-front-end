@@ -55,6 +55,11 @@ const router = createRouter({
     },
 
     //ADMIN SECTION
+    // {
+    //   path: '/dashboard',
+    //   name: 'dashboard',
+    //   component: () => import('@/views/adminSection/Dashboard.vue'),
+    // },
     {
       path: '/dashboard',
       name: 'dashboard',
