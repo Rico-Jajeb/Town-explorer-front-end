@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
-import { useAuthState } from '@/composables/auth/useAuthState' // shared state composable
-import { useAttempt } from '@/composables/auth/useAttempt'
+import { useAuthState } from '@/stores/auth/useAuthState'
+import { useAttempt } from '@/stores/auth/useAttempt'
 import { useToast } from 'primevue/usetoast'
 
 export function useLogin() {

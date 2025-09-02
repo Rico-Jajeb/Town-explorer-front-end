@@ -1,5 +1,5 @@
 <script setup>
-import { useLogout } from '@/composables/auth/useLogout'
+import { useLogout } from '@/stores/auth/useLogout'
 const { logout } = useLogout()
 </script>
 <template>

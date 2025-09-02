@@ -1,6 +1,6 @@
 <script setup>
-import { useAuthState } from '@/composables/auth/useAuthState'
-import { useLogin } from '@/composables/auth/useLogin'
+import { useAuthState } from '@/stores/auth/useAuthState'
+import { useLogin } from '@/stores/auth/useLogin'
 import { reactive } from 'vue'
 
 const { authenticated, user } = useAuthState()

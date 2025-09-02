@@ -12,7 +12,7 @@ import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
 import axios from 'axios'
 
-import { useAttempt } from './composables/auth/useAttempt'
+import { useAttempt } from '@/stores/auth/useAttempt'
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
 axios.defaults.withCredentials = true
 axios.defaults.withXSRFToken = true

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthState } from '@/composables/auth/useAuthState'
+import { useAuthState } from '@/stores/auth/useAuthState'
 
 import { useToast } from 'primevue/usetoast'
 

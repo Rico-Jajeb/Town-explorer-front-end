@@ -1,5 +1,5 @@
 <script setup>
-import { useAuthState } from '@/composables/auth/useAuthState'
+import { useAuthState } from '@/stores/auth/useAuthState'
 import { RouterLink, RouterView } from 'vue-router'
 const { authenticated, user } = useAuthState()
 </script>

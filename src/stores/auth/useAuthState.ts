@@ -13,6 +13,11 @@ const state = reactive({
   user: {} as User,
 })
 
+/**
+ * Composable for global authentication state.
+ * Provides reactive `authenticated` flag, user data, and mutators.
+ */
+
 export function useAuthState() {
   const authenticated = computed(() => state.authenticated)
   const user = computed(() => state.user)

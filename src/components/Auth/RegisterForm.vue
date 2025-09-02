@@ -21,6 +21,6 @@
 <script setup>
 import { useToast } from 'primevue/usetoast'
 const toast = useToast()
-import { useRegister } from '@/composables/auth/useRegister'
+import { useRegister } from '@/stores/auth/useRegister'
 const { form, register } = useRegister()
 </script>

@@ -14,8 +14,8 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useRouter } from 'vue-router'
 
-import { useLogout } from '@/composables/auth/useLogout'
-import { useAuthState } from '@/composables/auth/useAuthState'
+import { useLogout } from '@/stores/auth/useLogout'
+import { useAuthState } from '@/stores/auth/useAuthState'
 
 const router = useRouter()
 const { logout } = useLogout()
