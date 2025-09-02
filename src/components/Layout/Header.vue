@@ -1,6 +1,9 @@
 <script setup>
 import { useAuthState } from '@/stores/auth/useAuthState'
+import { useLogout } from '@/stores/auth/useLogout'
 import { RouterLink, RouterView } from 'vue-router'
+
+const { logout } = useLogout()
 const { authenticated, user } = useAuthState()
 </script>
 <template>
@@ -11,17 +14,15 @@ const { authenticated, user } = useAuthState()
       <RouterLink to="/addData">Add</RouterLink>
     </section>
     <section class="flex">
-      <div v-if="authenticated" class="pr-6">
-        Hello <span class="text-red-500">{{ user.name }}</span>
-      </div>
-      <div v-else class="pr-6">guest2</div>
       <div v-if="authenticated" class="">
-        <RouterLink to="/logout2">Logout</RouterLink>
-        <RouterLink to="/welcome">welcome user</RouterLink>
+        <RouterLink to="/"> {{ user.name }}</RouterLink>
+        <button @click="logout" type="button" class="px-4 py-2 text-red-700 rounded">Logout</button>
       </div>
-      <div v-else class="">
-        <RouterLink to="/login" class="!px-4">Login</RouterLink>
-        <RouterLink to="/register" class="!px-4">Register</RouterLink>
+
+      <div v-else class="flex">
+        <h1 class="pt-1 px-3">guest</h1>
+        <RouterLink to="/login" class="!px-3">Login</RouterLink>
+        <RouterLink to="/register" class="!px-3">Register</RouterLink>
       </div>
     </section>
   </nav>

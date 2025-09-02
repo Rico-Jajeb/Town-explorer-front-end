@@ -10,8 +10,6 @@ const toast = useToast()
 
 <template>
   <main class="w-full mb-96">
-    <h1 class="bg-red-700 text-white mt-96 px-96">Test2 46</h1>
-
     <div v-if="isLoading">
       <ProgressSpinner
         style="width: 50px; height: 50px"
