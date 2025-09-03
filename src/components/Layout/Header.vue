@@ -1,10 +1,22 @@
 <script setup>
+import { ref, reactive } from 'vue'
 import { useAuthState } from '@/stores/auth/useAuthState'
 import { useLogout } from '@/stores/auth/useLogout'
 import { RouterLink, RouterView } from 'vue-router'
 
 const { logout } = useLogout()
 const { authenticated, user } = useAuthState()
+const loading = ref(false)
+
+const handleLogout = async () => {
+  if (loading.value) return
+  loading.value = true
+  try {
+    await logout()
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 <template>
   <nav class="flex justify-between pb-5 mt-10">
@@ -16,8 +28,13 @@ const { authenticated, user } = useAuthState()
     <section class="flex">
       <div v-if="authenticated" class="">
         <RouterLink to="/"> {{ user.name }}</RouterLink>
-        <button @click="logout" type="button" class="px-4 py-2 text-red-700 rounded cursor-pointer">
-          Logout
+        <button
+          @click="handleLogout"
+          type="button"
+          class="px-4 py-2 text-red-700 rounded cursor-pointer"
+          :disabled="loading"
+        >
+          {{ loading ? 'Logging out...' : 'Logout' }}
         </button>
       </div>
 
