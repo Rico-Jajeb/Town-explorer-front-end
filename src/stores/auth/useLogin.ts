@@ -15,6 +15,7 @@ export function useLogin() {
 
     try {
       await axios.post('/login', credentials)
+      setAuthenticated(true)
       toast.add({
         severity: 'success',
         summary: 'Login message',

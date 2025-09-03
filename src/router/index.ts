@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/userSection/HomePage.vue'
 
 import { useAuthState } from '@/stores/auth/useAuthState'
+import { useAttempt } from '@/stores/auth/useAttempt'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,11 +67,27 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
+//   const auth = useAuthState()
+
+//   if (to.meta.requiresAuth && !auth.authenticated.value) {
+//     next('/login') // redirect if not authenticated
+//   } else {
+//     next()
+//   }
+// })
+
+router.beforeEach(async (to, from, next) => {
   const auth = useAuthState()
+  const { attempt } = useAttempt()
+
+  // Ensure state is synced with backend before checking
+  if (!auth.authenticated.value) {
+    await attempt()
+  }
 
   if (to.meta.requiresAuth && !auth.authenticated.value) {
-    next('/login') // redirect if not authenticated
+    next('/login')
   } else {
     next()
   }

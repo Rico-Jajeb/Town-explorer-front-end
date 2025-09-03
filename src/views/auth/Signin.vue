@@ -1,15 +1,25 @@
 <script setup>
+import { ref, reactive } from 'vue'
 import { useAuthState } from '@/stores/auth/useAuthState'
 import { useLogin } from '@/stores/auth/useLogin'
-import { reactive } from 'vue'
 
 const { authenticated, user } = useAuthState()
 const { login } = useLogin()
-
+const loading = ref(false)
 const form = reactive({
   email: '',
   password: '',
 })
+
+const handleLogin = async () => {
+  if (loading.value) return
+  loading.value = true
+  try {
+    await login(form)
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -18,7 +28,8 @@ const form = reactive({
       <div v-if="authenticated">Hello {{ user.name }}!</div>
       <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
 
-      <form v-on:submit.prevent="login(form)">
+      <!-- ✅ call handleLogin instead of login(form) -->
+      <form @submit.prevent="handleLogin">
         <div class="mb-4">
           <label class="block text-sm font-medium mb-1" for="email">Email</label>
           <input
@@ -41,16 +52,13 @@ const form = reactive({
           />
         </div>
 
-        <!-- <div v-if="errorMessage" class="text-red-500 text-sm mb-4">
-          {{ errorMessage }}
-        </div>
-
-        <div v-if="successMessage" class="text-green-500 text-sm mb-4">
-          {{ successMessage }}
-        </div> -->
         <br />
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-          Login
+        <button
+          type="submit"
+          class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          :disabled="loading"
+        >
+          {{ loading ? 'Logging in...' : 'Login' }}
         </button>
       </form>
     </div>
