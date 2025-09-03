@@ -16,7 +16,9 @@ const { authenticated, user } = useAuthState()
     <section class="flex">
       <div v-if="authenticated" class="">
         <RouterLink to="/"> {{ user.name }}</RouterLink>
-        <button @click="logout" type="button" class="px-4 py-2 text-red-700 rounded">Logout</button>
+        <button @click="logout" type="button" class="px-4 py-2 text-red-700 rounded cursor-pointer">
+          Logout
+        </button>
       </div>
 
       <div v-else class="flex">

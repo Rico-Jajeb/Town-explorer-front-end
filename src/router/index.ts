@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/userSection/HomePage.vue'
 
+import { useAuthState } from '@/stores/auth/useAuthState'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+
   routes: [
     {
       path: '/',
@@ -54,18 +57,23 @@ const router = createRouter({
       component: () => import('@/views/userSection/WelcomeUser.vue'),
     },
 
-    //ADMIN SECTION
-    // {
-    //   path: '/dashboard',
-    //   name: 'dashboard',
-    //   component: () => import('@/views/adminSection/Dashboard.vue'),
-    // },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('@/views/adminSection/Dashboard.vue'),
+      meta: { requiresAuth: true },
     },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const auth = useAuthState()
+
+  if (to.meta.requiresAuth && !auth.authenticated.value) {
+    next('/login') // redirect if not authenticated
+  } else {
+    next()
+  }
 })
 
 export default router
