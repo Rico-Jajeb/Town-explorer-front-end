@@ -160,7 +160,7 @@ const handleUpdate = async () => {
         class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
         :disabled="loading"
       >
-        {{ loading ? 'Updating....' : 'Update' }}
+        {{ loading ? 'Updating System info....' : 'System Update' }}
       </button>
     </form>
 
