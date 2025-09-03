@@ -57,25 +57,22 @@ const router = createRouter({
       name: 'welcome',
       component: () => import('@/views/userSection/WelcomeUser.vue'),
     },
-
+    //--------------------------[ Admin Section ]--------------------------\\
     {
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('@/views/adminSection/Dashboard.vue'),
       meta: { requiresAuth: true },
     },
+
+    {
+      path: '/setting',
+      name: 'systemSettings',
+      component: () => import('@/views/adminSection/Settings/SystemSettings.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
-
-// router.beforeEach((to, from, next) => {
-//   const auth = useAuthState()
-
-//   if (to.meta.requiresAuth && !auth.authenticated.value) {
-//     next('/login') // redirect if not authenticated
-//   } else {
-//     next()
-//   }
-// })
 
 router.beforeEach(async (to, from, next) => {
   const auth = useAuthState()

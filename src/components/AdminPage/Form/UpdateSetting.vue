@@ -1,14 +1,26 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Image from 'primevue/image'
 import { useSystemSettings } from '@/composables/Settings/useSystemUpdate'
 
 const { form, srcLogo, errors, onFileSelectLogo, updateSystemInfo } = useSystemSettings()
+const loading = ref(false)
+
+const handleUpdate = async () => {
+  if (loading.value) return
+  loading.value = true
+  try {
+    await updateSystemInfo()
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 <template>
   <main class="pb-96">
-    <form @submit.prevent="updateSystemInfo" class="space-y-4">
+    <form @submit.prevent="handleUpdate" class="space-y-4">
       <section class="py-4">
         <label for="Web Name" class="block mb-2 text-lg font-medium text-gray-500 dark:text-white"
           >System Name</label
@@ -143,8 +155,12 @@ const { form, srcLogo, errors, onFileSelectLogo, updateSystemInfo } = useSystemS
         </div>
       </div>
       <br />
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
-        Update
+      <button
+        type="submit"
+        class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
+        :disabled="loading"
+      >
+        {{ loading ? 'Updating....' : 'Update' }}
       </button>
     </form>
 
