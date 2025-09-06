@@ -4,6 +4,8 @@ import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Image from 'primevue/image'
 import { useSystemSettings } from '@/composables/Settings/useSystemUpdate'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const { form, srcLogo, errors, onFileSelectLogo, updateSystemInfo } = useSystemSettings()
 const loading = ref(false)
@@ -11,10 +13,12 @@ const loading = ref(false)
 const handleUpdate = async () => {
   if (loading.value) return
   loading.value = true
+  NProgress.start()
   try {
     await updateSystemInfo()
   } finally {
     loading.value = false
+    NProgress.done()
   }
 }
 </script>
