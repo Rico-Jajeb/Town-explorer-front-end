@@ -15,6 +15,7 @@ export default defineConfig({
   },
   server: {
     host: '192.168.254.169', // 👈 use same IP as Laravel backend
+    //host: '0.0.0.0', // 👈 use same IP as Laravel backend
     port: 5173,
   },
 })

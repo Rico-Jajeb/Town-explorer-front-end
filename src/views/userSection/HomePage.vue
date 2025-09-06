@@ -25,6 +25,7 @@ const toast = useToast()
       <h1>{{ systemInfo?.system_name }}</h1>
       <p>{{ systemInfo?.system_slogan1 }}</p>
       <p>{{ systemInfo?.system_slogan2 }}</p>
+      <p>{{ systemInfo?.system_slogan2 }}</p>
     </div>
   </main>
 </template>

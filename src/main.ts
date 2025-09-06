@@ -4,6 +4,9 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
 import router from './router'
 
 import PrimeVue from 'primevue/config'
@@ -18,6 +21,24 @@ axios.defaults.withCredentials = true
 axios.defaults.withXSRFToken = true
 
 const { attempt } = useAttempt()
+
+// Configure NProgress (global defaults)
+NProgress.configure({
+  showSpinner: false,
+  speed: 400,
+  minimum: 0.2,
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path !== from.path) {
+    NProgress.start()
+  }
+  next()
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
 
 const pinia = createPinia()
 const app = createApp(App)
