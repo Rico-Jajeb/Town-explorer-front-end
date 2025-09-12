@@ -6,37 +6,50 @@ import HomePage from '@/views/userSection/HomePage.vue'
 import { useAuthState } from '@/stores/auth/useAuthState'
 import { useAttempt } from '@/stores/auth/useAttempt'
 
+import AdminLayout from '@/layout/AdminLayout.vue'
+import UserLayout from '@/layout/UserLayout.vue'
+
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomePage,
+    name: 'user',
+    component: UserLayout,
+    children: [
+      {
+        path: '/',
+        name: 'home',
+        component: HomePage,
+      },
+      {
+        path: '/Home',
+        name: 'Home',
+        component: () => import('@/views/userSection/HomePage.vue'),
+      },
+      {
+        path: '/about',
+        name: 'about',
+        component: () => import('../views/AboutView.vue'),
+      },
+      {
+        path: '/register',
+        name: 'Sign Up',
+        component: () => import('@/views/auth/Register.vue'),
+      },
+
+      {
+        path: '/AddData',
+        name: 'add',
+        component: () => import('@/components/AdminPage/InsertPageData.vue'),
+      },
+    ],
   },
-  {
-    path: '/Home',
-    name: 'Home',
-    component: () => import('@/views/userSection/HomePage.vue'),
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue'),
-  },
-  {
-    path: '/register',
-    name: 'Sign Up',
-    component: () => import('@/views/auth/Register.vue'),
-  },
+
   {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/Signin.vue'),
   },
-  {
-    path: '/AddData',
-    name: 'add',
-    component: () => import('@/components/AdminPage/InsertPageData.vue'),
-  },
+
   {
     path: '/logout2',
     name: 'Logout',
@@ -48,12 +61,27 @@ const routes = [
     component: () => import('@/views/userSection/WelcomeUser.vue'),
   },
   //--------------------------[ Admin Section ]--------------------------\\
+  // {
+  //   path: '/dashboard',
+  //   name: 'dashboard',
+  //   component: () => import('@/views/adminSection/Dashboard.vue'),
+  //   meta: { requiresAuth: true },
+  // },
+
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('@/views/adminSection/Dashboard.vue'),
-    meta: { requiresAuth: true },
+    path: '/admin',
+    name: 'admin',
+    component: AdminLayout,
+    children: [
+      {
+        path: '/dashboard',
+        name: '/dashboard',
+        component: () => import('@/views/adminSection/Dashboard.vue'),
+        meta: { requiresAuth: true },
+      },
+    ],
   },
+
   {
     path: '/setting',
     name: 'systemSettings',

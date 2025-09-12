@@ -4,33 +4,19 @@ import { useToast } from 'primevue/usetoast'
 import Header1 from '@/components/Layout/Header.vue'
 import Footer2 from '@/components/Layout/Footer.vue'
 
-import axios from 'axios'
-axios.defaults.baseURL = 'http://192.168.254.169:8000'
-axios.defaults.withCredentials = true
-axios.defaults.withXSRFToken = true
+// import axios from 'axios'
+// axios.defaults.baseURL = 'http://192.168.254.169:8000'
+// axios.defaults.withCredentials = true
+// axios.defaults.withXSRFToken = true
 
 const toast = useToast()
 </script>
 
 <template>
-  <!-- <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header> -->
   <main>
-    <Header1 />
     <section>
       <RouterView />
     </section>
-    <Footer2 />
   </main>
   <Toast />
 </template>
