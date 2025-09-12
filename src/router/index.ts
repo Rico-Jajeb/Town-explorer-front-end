@@ -61,12 +61,6 @@ const routes = [
     component: () => import('@/views/userSection/WelcomeUser.vue'),
   },
   //--------------------------[ Admin Section ]--------------------------\\
-  // {
-  //   path: '/dashboard',
-  //   name: 'dashboard',
-  //   component: () => import('@/views/adminSection/Dashboard.vue'),
-  //   meta: { requiresAuth: true },
-  // },
 
   {
     path: '/admin',
@@ -79,14 +73,14 @@ const routes = [
         component: () => import('@/views/adminSection/Dashboard.vue'),
         meta: { requiresAuth: true },
       },
-    ],
-  },
 
-  {
-    path: '/setting',
-    name: 'systemSettings',
-    component: () => import('@/views/adminSection/Settings/SystemSettings.vue'),
-    meta: { requiresAuth: true },
+      {
+        path: '/setting',
+        name: 'systemSettings',
+        component: () => import('@/views/adminSection/Settings/SystemSettings.vue'),
+        meta: { requiresAuth: true },
+      },
+    ],
   },
 ]
 
