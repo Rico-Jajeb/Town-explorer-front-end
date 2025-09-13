@@ -75,6 +75,12 @@ const routes = [
       },
 
       {
+        path: '/resorts',
+        name: 'resorts',
+        component: () => import('@/views/adminSection/Resorts.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
         path: '/setting',
         name: 'systemSettings',
         component: () => import('@/views/adminSection/Settings/SystemSettings.vue'),

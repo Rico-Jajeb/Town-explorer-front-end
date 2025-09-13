@@ -27,24 +27,31 @@ const hamburg = {
     <aside class="basis-1/8 bg-blue-100" :class="{ hidden: hid }">
       <Sidebar />
     </aside>
-    <section class="basis-full bg-amber-300 min-h-screen">
-      <button type="button" @click="hamburg.toggle" class="p-4 bg-red-600 text-white rounded">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          class="w-6 h-6"
+    <section class="basis-full bg-amber-100 min-h-screen">
+      <nav class="flex justify-between">
+        <button
+          type="button"
+          @click="hamburg.toggle"
+          class="ml-3 mt-3 p-2 bg-gray-900 text-white rounded"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </button>
-      <Header />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+        <Header />
+      </nav>
+
       <RouterView />
     </section>
   </main>
